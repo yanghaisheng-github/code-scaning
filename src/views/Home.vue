@@ -1,18 +1,48 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="wrapper">
+        <v-head></v-head>
+        <v-sidebar></v-sidebar>
+        <div class="content-box" :class="{'content-collapse':collapse}">
+            <v-tags></v-tags>
+            <div class="content">
+                <transition name="move" mode="out-in">
+                    <keep-alive :include="tagsList">
+                        <router-view></router-view>
+                    </keep-alive>
+                </transition>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+    import vHead from '../components/Header';
+    import vSidebar from '../components/Sidebar';
+    import vTags from '../components/Tags';
+    import bus from '../components/bus';
+    export default {
+        data(){
+            return {
+                tagsList: [],
+                collapse: false
+            }
+        },
+        components:{
+            vHead, vSidebar, vTags
+        },
+        created(){
+            bus.$on('collapse', msg => {
+                this.collapse = msg;
+            })
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+            // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
+            bus.$on('tags', msg => {
+                let arr = [];
+                for(let i = 0, len = msg.length; i < len; i ++){
+                    msg[i].name && arr.push(msg[i].name);
+                }
+                this.tagsList = arr;
+            })
+        }
+    }
 </script>

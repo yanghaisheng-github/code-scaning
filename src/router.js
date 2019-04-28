@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from './views/Login.vue'
 import Home from './views/Home.vue'
 
 Vue.use(Router)
@@ -8,16 +9,42 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      redirect: '/Login'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/Login',
+      component: Login
+    },
+    {
+      path: '/Home',
+      component: Home,
+      children: [
+        {
+          path: '/Dashboard',
+          component: resolve => require(['./components/Dashboard.vue'], resolve),
+          meta: {title: '系统首页'}
+        },
+        {
+          path: '/SystemListing',
+          component: resolve => require(['./components/SystemListing.vue'], resolve),
+          meta: {title: '系统清单'}
+        },
+        {
+          path: '/Users',
+          component: resolve => require(['./components/Users.vue'], resolve),
+          meta: {title: '用户管理'}
+        },
+        {
+          path: '/scanJava',
+          component: resolve => require(['./components/scanJava.vue'], resolve),
+          meta: {title: 'Java代码扫描'}
+        },
+      ]
+    },
+    {
+      path: '*',
+      redirect: '/404'
+
     }
   ]
 })
