@@ -56,7 +56,7 @@
         },
         computed:{
             username(){
-                let username = localStorage.getItem('sca_username');
+                let username = sessionStorage.getItem('sca_username');
                 return username ? username : this.name;
             }
         },
@@ -64,7 +64,7 @@
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command == 'loginout'){
-                    localStorage.removeItem('sca_username')
+                    sessionStorage.removeItem('sca_username')
                     this.$router.push('/login');
                 }
             },

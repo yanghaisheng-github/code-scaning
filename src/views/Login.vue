@@ -57,10 +57,12 @@ export default {
           var loginParams = { username: this.account.username, password: this.account.password};
           this.$axios.post('/user/login', loginParams).then( res => {
             this.logining = false;
-            let { msg, code, token } = res.data;
+            let { msg, code, token, role } = res.data;
             if( code == '200'){
               sessionStorage.setItem('access-token', token);
-              localStorage.setItem('sca_username', loginParams.username);
+              sessionStorage.setItem('role', role);
+              sessionStorage.setItem('sca_username', loginParams.username);
+              //localStorage.setItem('sca_username', loginParams.username);
               this.$router.push({ path: '/Home'});
             }else{
               this.$message({

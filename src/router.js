@@ -22,22 +22,32 @@ export default new Router({
         {
           path: '/Dashboard',
           component: resolve => require(['./components/Dashboard.vue'], resolve),
-          meta: {title: '系统首页'}
+          meta: { title: '系统首页', permission: 'common' }
         },
         {
           path: '/SystemListing',
           component: resolve => require(['./components/SystemListing.vue'], resolve),
-          meta: {title: '系统清单'}
+          meta: { title: '系统清单', permission: 'admin' }
         },
         {
           path: '/Users',
           component: resolve => require(['./components/Users.vue'], resolve),
-          meta: {title: '用户管理'}
+          meta: { title: '用户管理', permission: 'admin' }
         },
         {
           path: '/scanJava',
           component: resolve => require(['./components/scanJava.vue'], resolve),
-          meta: {title: 'Java代码扫描'}
+          meta: { title: 'Java代码扫描', permission: 'common' }
+        },
+        {
+          path: '/404',
+          component: resolve => require(['./components/404.vue'], resolve),
+          meta: { title: '404' }
+        },
+        {
+          path: '/403',
+          component: resolve => require(['./components/403.vue'], resolve),
+          meta: { title: '403' }
         },
       ]
     },
