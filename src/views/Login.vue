@@ -5,7 +5,7 @@
     <el-form ref='AccountForm' :model="account" :rules="rules" label-width="0px" class="ms-content">
       <el-form-item  prop='username'>
         <el-input type='text' v-model="account.username" placeholder="请输入用户名">
-          <el-button slot="prepend" icon="el-icon-news"></el-button>
+          <el-button slot="prepend" icon="el-icon-yhszhanghaoquanxianguanli"></el-button>
         </el-input>
       </el-form-item>
       <el-form-item  prop='password'>
@@ -63,7 +63,7 @@ export default {
               sessionStorage.setItem('role', role);
               sessionStorage.setItem('sca_username', loginParams.username);
               //localStorage.setItem('sca_username', loginParams.username);
-              this.$router.push({ path: '/Home'});
+              this.$router.push({ path: '/'});
             }else{
               this.$message({
                 showClose: true,

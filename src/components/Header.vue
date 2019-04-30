@@ -50,7 +50,7 @@
             return {
                 collapse: false,
                 fullscreen: false,
-                name: 'linxin',
+                name: '未登录',
                 message: 2
             }
         },
@@ -64,7 +64,8 @@
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command == 'loginout'){
-                    sessionStorage.removeItem('sca_username')
+                    sessionStorage.removeItem('sca_username');
+                    sessionStorage.removeItem('role');
                     this.$router.push('/login');
                 }
             },

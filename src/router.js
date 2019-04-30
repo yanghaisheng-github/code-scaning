@@ -1,23 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './views/Login.vue'
-import Home from './views/Home.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      redirect: '/Login'
+      path: '/Home',
+      redirect: '/scanJava'
     },
     {
       path: '/Login',
-      component: Login
+      component: resolve => require(['./views/Login.vue'], resolve),
     },
     {
-      path: '/Home',
-      component: Home,
+      path: '/',
+      component: resolve => require(['./views/Home.vue'], resolve),
       children: [
         {
           path: '/Dashboard',
@@ -40,6 +38,11 @@ export default new Router({
           meta: { title: 'Java代码扫描', permission: 'common' }
         },
         {
+          path: '/scanC',
+          component: resolve => require(['./components/scanC.vue'], resolve),
+          meta: { title: 'C代码扫描', permission: 'common' }
+        },
+        {
           path: '/404',
           component: resolve => require(['./components/404.vue'], resolve),
           meta: { title: '404' }
@@ -54,7 +57,6 @@ export default new Router({
     {
       path: '*',
       redirect: '/404'
-
     }
   ]
 })
