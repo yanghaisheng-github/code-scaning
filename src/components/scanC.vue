@@ -162,7 +162,8 @@ export default {
       //alert('用户名:' + localStorage.getItem('sca_username'));
       this.$axios
         .post("/upload/table/C", {
-          username: sessionStorage.getItem("sca_username")
+          username: sessionStorage.getItem("sca_username"),
+          role: sessionStorage.getItem('role')
         })
         .then(res => {
           this.tableData = res.data;

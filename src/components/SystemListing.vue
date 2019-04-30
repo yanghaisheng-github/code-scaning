@@ -114,8 +114,9 @@
           <el-input v-model="addform.Architect" placeholder="请填写全名"></el-input>
         </el-form-item>
         <el-form-item label="代码语言" prop="Language">
-          <el-select v-model="addform.Language" placeholder="请选择java或C">
+          <el-select v-model="addform.Language" placeholder="请选择扫描语言">
             <el-option label="Java" value="Java"></el-option>
+            <el-option label="JavaScript" value="JS"></el-option>
             <el-option label="C" value="C"></el-option>
           </el-select>
         </el-form-item>
@@ -162,8 +163,9 @@
           <el-input v-model="editform.Architect" placeholder="请填写全名"></el-input>
         </el-form-item>
         <el-form-item label="代码语言" prop="Language">
-          <el-select v-model="editform.Language" placeholder="请选择java或C">
+          <el-select v-model="editform.Language" placeholder="请选择扫描语言">
             <el-option label="Java" value="Java"></el-option>
+            <el-option label="JavaScript" value="JS"></el-option>
             <el-option label="C" value="C"></el-option>
           </el-select>
         </el-form-item>
@@ -253,7 +255,7 @@ export default {
       if (this.select_word) {
         this.totalPageCount = newValue.length;
         this.cur_page = 1;
-      }else{
+      } else {
         this.totalPageCount = this.tableData.length;
       }
     }
@@ -413,10 +415,13 @@ export default {
       //发送删除数据
       let del_list_name = [];
       for (let i = 0; i < this.multipleSelection.length; i++) {
-        del_list_name.push(this.multipleSelection[i].SystemName);
+        del_list_name.push({
+          SystemName: this.multipleSelection[i].SystemName,
+          Language: this.multipleSelection[i].Language
+        });
       }
       this.$axios
-        .post("/systemlisting/table/delete", { MultiSystemName: del_list_name })
+        .post("/systemlisting/table/delete", del_list_name)
         .then(res => {
           if (res.data) {
             this.$message.success("删除成功");
@@ -444,12 +449,14 @@ export default {
     },
     // 确定删除
     deleteRow() {
+      let del_list_name = [];
+      del_list_name.push({
+        SystemName: this.rowx.SystemName,
+        Language: this.rowx.Language
+      });
       //发送删除数据
       this.$axios
-        .post("/systemlisting/table/delete", {
-          SystemName: this.rowx.SystemName,
-          MultiSystemName: ""
-        })
+        .post("/systemlisting/table/delete", del_list_name)
         .then(res => {
           if (res.data) {
             this.delVisible = false;

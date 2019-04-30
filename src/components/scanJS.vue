@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-cascades"></i> Java代码扫描
+          <i class="el-icon-lx-cascades"></i> JavaScript代码扫描
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -27,7 +27,7 @@
             <el-upload
               class="upload-demo"
               drag
-              action="http://localhost:3000/upload/src/Java"
+              action="http://localhost:3000/upload/src/JS"
               ref="srcupload"
               :data="scope.row"
               :limit="1"
@@ -54,7 +54,7 @@
             <el-upload
               class="upload-demo"
               drag
-              action="http://localhost:3000/upload/analysisReport/Java"
+              action="http://localhost:3000/upload/analysisReport/JS"
               :data="scope.row"
               :limit="1"
               :on-preview="handleAnalysisPreview"
@@ -161,7 +161,7 @@ export default {
     getData() {
       //alert('用户名:' + localStorage.getItem('sca_username'));
       this.$axios
-        .post("/upload/table/Java", {
+        .post("/upload/table/JS", {
           username: sessionStorage.getItem("sca_username"),
           role: sessionStorage.getItem('role')
         })

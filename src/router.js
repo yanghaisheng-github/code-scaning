@@ -6,12 +6,12 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/Home',
-      redirect: '/scanJava'
-    },
-    {
       path: '/Login',
       component: resolve => require(['./views/Login.vue'], resolve),
+    },
+    {
+      path: '/Home',
+      redirect: '/scanJava'
     },
     {
       path: '/',
@@ -36,6 +36,11 @@ export default new Router({
           path: '/scanJava',
           component: resolve => require(['./components/scanJava.vue'], resolve),
           meta: { title: 'Java代码扫描', permission: 'common' }
+        },
+        {
+          path: '/scanJS',
+          component: resolve => require(['./components/scanJS.vue'], resolve),
+          meta: { title: 'JS代码扫描', permission: 'common' }
         },
         {
           path: '/scanC',
