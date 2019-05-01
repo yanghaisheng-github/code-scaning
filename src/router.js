@@ -48,6 +48,11 @@ export default new Router({
           meta: { title: 'C代码扫描', permission: 'common' }
         },
         {
+          path: '/MMSC',
+          component: resolve => require(['./components/MMSC.vue'], resolve),
+          meta: { title: '消息中心', permission: 'common' }
+        },
+        {
           path: '/404',
           component: resolve => require(['./components/404.vue'], resolve),
           meta: { title: '404' }

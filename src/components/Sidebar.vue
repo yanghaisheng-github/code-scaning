@@ -84,7 +84,7 @@ export default {
         },
         {
           icon: "el-icon-lx-warn",
-          index: "8",
+          index: "MMSC",
           title: "消息中心"
         }
       ]

@@ -47,7 +47,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="usertype" label="扫描结果下载" width="120">
-          <el-button type="primary" :icon="downloadIcon" disabled="downloadEnabled">下载</el-button>
+          <el-row>
+            <el-button type="text">查看日志</el-button>
+          </el-row>
+          <el-row>
+            <el-button type="primary" :icon="downloadIcon" :disabled="downloadEnabled">下载</el-button>
+          </el-row>
         </el-table-column>
         <el-table-column prop="usertype" label="上传分析报告" width="400">
           <template slot-scope="scope">
@@ -112,7 +117,7 @@ export default {
       select_word: "",
       idx: -1,
       rowx: {},
-      downloadEnabled: false,
+      downloadEnabled: true,
       downloadIcon: "el-icon-download",
       fileInfo: {},
       successFileInfo: {},
@@ -135,14 +140,11 @@ export default {
   },
   computed: {
     filterTableData: function() {
-      return this.tableData
-        .filter(
-          data =>
-            !this.select_word ||
-            data.SystemName.toLowerCase().includes(
-              this.select_word.toLowerCase()
-            )
-        );
+      return this.tableData.filter(
+        data =>
+          !this.select_word ||
+          data.SystemName.toLowerCase().includes(this.select_word.toLowerCase())
+      );
     }
   },
   methods: {
@@ -163,7 +165,7 @@ export default {
       this.$axios
         .post("/upload/table/JS", {
           username: sessionStorage.getItem("sca_username"),
-          role: sessionStorage.getItem('role')
+          role: sessionStorage.getItem("role")
         })
         .then(res => {
           this.tableData = res.data;
