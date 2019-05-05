@@ -27,7 +27,7 @@
             <el-upload
               class="upload-demo"
               drag
-              action="http://localhost:3000/upload/src/C"
+              action="http://localhost:3000/upload/srcupload/C"
               ref="srcupload"
               :data="scope.row"
               :limit="1"
@@ -47,12 +47,19 @@
           </template>
         </el-table-column>
         <el-table-column prop="usertype" label="扫描结果下载" width="120">
-          <el-row>
-            <el-button type="text">查看日志</el-button>
-          </el-row>
-          <el-row>
-            <el-button type="primary" :icon="downloadIcon" :disabled="downloadEnabled">下载</el-button>
-          </el-row>
+          <template slot-scope="scope">
+            <el-row>
+              <el-button type="text">查看日志</el-button>
+            </el-row>
+            <el-row>
+              <el-button
+                type="primary"
+                :icon="scope.row.downloadIcon"
+                :disabled="scope.row.downloadEnabled"
+                @click="downloadReport(scope.row.SystemName)"
+              >下载</el-button>
+            </el-row>
+          </template>
         </el-table-column>
         <el-table-column prop="usertype" label="上传分析报告" width="400">
           <template slot-scope="scope">
@@ -107,7 +114,9 @@ export default {
         scan_report_first: "",
         scan_report: "",
         analysis_report_first: "",
-        analysis_report: ""
+        analysis_report: "",
+        downloadEnabled: true,
+        downloadIcon: "el-icon-download"
       },
       cur_page: 1,
       pageSize: 5,
@@ -117,8 +126,7 @@ export default {
       select_word: "",
       idx: -1,
       rowx: {},
-      downloadEnabled: true,
-      downloadIcon: "el-icon-download",
+
       fileInfo: {},
       successFileInfo: {},
       successFileList: [],
@@ -192,6 +200,14 @@ export default {
               this.tableData[index].analysisReportList = analysisReportList;
             }
 
+            //判断能否下载报告
+            if (!item.scan_report) {
+              this.tableData[index].downloadEnabled = true;
+            }
+            //控制下载图标样式
+            if (!item.scan_report && item.scan_src) {
+              this.tableData[index].downloadIcon = "el-icon-loading";
+            }
             //this.srcfileList.push(fileList);
           });
         });
@@ -242,7 +258,7 @@ export default {
       this.successFileInfo = file;
       //this.$refs.srcupload.clearFiles();
       this.$message.success(response.msg);
-      this.downloadIcon = "el-icon-loading";
+      //this.downloadIcon = "el-icon-loading";
     },
 
     //点击文件列表中已上传的文件时的钩子，此处用来下载分析报告
@@ -287,6 +303,29 @@ export default {
     //文件上传成功时的钩子, response即为后台返回的全部内容
     handleAnalysisSuccess(response) {
       this.$message.success(response.msg);
+    },
+    downloadReport(systemname) {
+      this.$axios
+        .post(
+          "/upload/downloadReport",
+          { systemname: systemname },
+          { responseType: "arraybuffer" }
+        )
+        .then(res => {
+          //注意：由于responseType: "arraybuffer"的作用导致返回的数据都是buffer类型，不是json，所以无法通过res.data.*去获取对应的返回数据
+          this.responseData = res.data;
+          let blob = new Blob([res.data]);
+          let url = window.URL.createObjectURL(blob);
+          //alert('下载的URL：' + url);
+          let link = document.createElement("a");
+          link.style.display = "none";
+          link.href = url;
+          link.setAttribute("download", `${systemname}.pdf`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link); //下载完成移除元素
+          window.URL.revokeObjectURL(link.href); //释放掉blob对象
+        });
     },
     filterTag(value, row) {
       return row.tag === value;
