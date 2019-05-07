@@ -129,6 +129,7 @@ export default {
         })
         .then(res => {
           this.tableData = res.data;
+          this.tableData.reverse();
           this.tableData.forEach(item => {
             if (item.status == "未读") {
               this.unread.push(item);
