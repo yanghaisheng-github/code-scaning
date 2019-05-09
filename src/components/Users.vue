@@ -174,6 +174,7 @@
 
 <script>
 export default {
+  name: 'users',
   data() {
     var validatePass = (rule, value, callback) => {
       if (value !== this.passwordform.newPw) {

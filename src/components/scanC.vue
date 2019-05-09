@@ -105,6 +105,7 @@
 <script>
 import { Promise } from "q";
 export default {
+  name: 'scanC',
   data() {
     return {
       tableData: [],

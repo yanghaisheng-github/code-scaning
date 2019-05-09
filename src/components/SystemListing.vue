@@ -192,6 +192,7 @@
 
 <script>
 export default {
+  name: 'systemlisting',
   data() {
     return {
       tableData: [],

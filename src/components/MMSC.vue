@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-copy"></i> tab选项卡
+          <i class="el-icon-lx-copy"></i> 消息中心
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  name: "tabs",
+  name: "mmsc",
   data() {
     return {
       tableData: [],

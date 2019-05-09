@@ -42,8 +42,9 @@
 </template>
 
 <script>
-import bus from "../api/bus";
+import bus from "../views/bus";
 export default {
+  name: 'sidebar',
   data() {
     return {
       collapse: false,

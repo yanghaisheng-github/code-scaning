@@ -23,8 +23,9 @@
 </template>
 
 <script>
-    import bus from './bus';
+    import bus from '../views/bus';
     export default {
+        name: 'tags',
         data() {
             return {
                 tagsList: []

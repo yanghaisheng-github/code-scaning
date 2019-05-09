@@ -19,12 +19,14 @@
     import vHead from '../components/Header';
     import vSidebar from '../components/Sidebar';
     import vTags from '../components/Tags';
-    import bus from '../components/bus';
+    import bus from './bus';
     export default {
+        name: 'home',
         data(){
             return {
                 tagsList: [],
-                collapse: false
+                collapse: false,
+                msg: []
             }
         },
         components:{
@@ -32,12 +34,14 @@
         },
         created(){
             bus.$on('collapse', msg => {
+                //alert(msg);
                 this.collapse = msg;
             })
 
             // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
             bus.$on('tags', msg => {
                 let arr = [];
+                this.msg = msg;
                 for(let i = 0, len = msg.length; i < len; i ++){
                     msg[i].name && arr.push(msg[i].name);
                 }

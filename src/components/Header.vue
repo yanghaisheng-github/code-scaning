@@ -47,8 +47,9 @@
   </div>
 </template>
 <script>
-import bus from "../api/bus";
+import bus from "../views/bus";
 export default {
+  name: 'headers',
   data() {
     return {
       collapse: false,
