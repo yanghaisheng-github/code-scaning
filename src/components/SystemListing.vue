@@ -116,7 +116,7 @@
         <el-form-item label="代码语言" prop="Language">
           <el-select v-model="addform.Language" placeholder="请选择扫描语言">
             <el-option label="Java" value="Java"></el-option>
-            <el-option label="JavaScript" value="JS"></el-option>
+            <el-option label="JavaScript" value="JavaScript"></el-option>
             <el-option label="C" value="C"></el-option>
           </el-select>
         </el-form-item>
@@ -165,7 +165,7 @@
         <el-form-item label="代码语言" prop="Language">
           <el-select v-model="editform.Language" placeholder="请选择扫描语言">
             <el-option label="Java" value="Java"></el-option>
-            <el-option label="JavaScript" value="JS"></el-option>
+            <el-option label="JavaScript" value="JavaScript"></el-option>
             <el-option label="C" value="C"></el-option>
           </el-select>
         </el-form-item>

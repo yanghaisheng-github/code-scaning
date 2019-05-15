@@ -59,10 +59,9 @@ export default {
             this.logining = false;
             let { msg, code, token, role } = res.data;
             if( code == '200'){
-              sessionStorage.setItem('access-token', token);
+              localStorage.setItem('Authorization', token);
               sessionStorage.setItem('role', role);
               sessionStorage.setItem('sca_username', loginParams.username);
-              //localStorage.setItem('sca_username', loginParams.username);
               this.$router.push({ path: '/'});
             }else{
               this.$message({

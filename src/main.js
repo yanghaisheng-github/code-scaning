@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import './plugins/element.js'
+import './plugins/froala-wysing'
 import './api/directives'
 
 Vue.config.productionTip = false

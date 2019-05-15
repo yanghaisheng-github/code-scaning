@@ -1,5 +1,12 @@
 <template>
   <div class="table">
+    <div class="crumbs">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>
+          <i class="el-icon-lx-cascades"></i> C代码扫描
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="container">
       <div class="handle-box">
         <el-input v-model="select_word" placeholder="输入关键字搜索" class="handle-input mr10"></el-input>
@@ -14,18 +21,13 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column label="系统名称" prop="SystemName"  align="center">
-          <template slot-scope="scope">
-            <el-link @click="toAnalysisTab(scope.row.SystemName)">{{scope.row.SystemName}}</el-link>
-            
-          </template>
-        </el-table-column>
-        <el-table-column label="上传代码扫描"  align="center">
+        <el-table-column label="系统名称" prop="SystemName" width="150"></el-table-column>
+        <el-table-column label="上传代码扫描" width="400">
           <template slot-scope="scope">
             <el-upload
               class="upload-demo"
               drag
-              :action="'http://localhost:3000/upload/srcupload/' + codeType"
+              action="http://localhost:3000/upload/srcupload/C"
               ref="srcupload"
               :data="scope.row"
               :limit="1"
@@ -34,7 +36,6 @@
               :before-remove="beforeSrcRemove"
               :on-success="handleSrcSuccess"
               :file-list="scope.row.srcfileList"
-              accept=".zip,.tar"
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
@@ -45,7 +46,7 @@
             </el-upload>
           </template>
         </el-table-column>
-        <el-table-column prop="scan_report" label="扫描结果下载" align="center">
+        <el-table-column prop="usertype" label="扫描结果下载" width="120">
           <template slot-scope="scope">
             <el-row>
               <el-button type="text">查看日志</el-button>
@@ -60,12 +61,12 @@
             </el-row>
           </template>
         </el-table-column>
-<!--         <el-table-column prop="usertype" label="上传分析报告" width="400" align="center">
+        <el-table-column prop="usertype" label="上传分析报告" width="400">
           <template slot-scope="scope">
             <el-upload
               class="upload-demo"
               drag
-              action="http://localhost:3000/upload/analysisReport/Java"
+              action="http://localhost:3000/upload/analysisReport/C"
               :data="scope.row"
               :limit="1"
               :on-preview="handleAnalysisPreview"
@@ -73,17 +74,16 @@
               :before-remove="beforeAnalysisRemove"
               :on-success="handleAnalysisSuccess"
               :file-list="scope.row.analysisReportList"
-              accept=".xlsx"
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
                 将文件拖到此处，或
                 <em>点击上传</em>
               </div>
-              <div class="el-upload__tip" slot="tip">请上传代码分析报告,仅支持.xlsx格式</div>
+              <div class="el-upload__tip" slot="tip">请上传代码分析报告</div>
             </el-upload>
           </template>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
 
       <div class="pagination">
@@ -105,8 +105,7 @@
 <script>
 import { Promise } from "q";
 export default {
-  name: 'tabScan',
-  props: ["codeType", "systemName"],
+  name: 'scanC',
   data() {
     return {
       tableData: [],
@@ -128,6 +127,7 @@ export default {
       select_word: "",
       idx: -1,
       rowx: {},
+
       fileInfo: {},
       successFileInfo: {},
       successFileList: [],
@@ -168,15 +168,11 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    //跳转到代码分析Tab页面，并传入被点击的项目名称
-    toAnalysisTab(projectname) {
-      this.$emit("addTab", projectname);
-    },
     // 获取系统清单表数据
     getData() {
       //alert('用户名:' + localStorage.getItem('sca_username'));
       this.$axios
-        .post(`/upload/table/${this.codeType}`, {
+        .post("/upload/table/C", {
           username: sessionStorage.getItem("sca_username"),
           role: sessionStorage.getItem("role")
         })
@@ -213,6 +209,7 @@ export default {
             if (!item.scan_report && item.scan_src) {
               this.tableData[index].downloadIcon = "el-icon-loading";
             }
+            //this.srcfileList.push(fileList);
           });
         });
     },
@@ -265,7 +262,7 @@ export default {
       //this.downloadIcon = "el-icon-loading";
     },
 
-/*     //点击文件列表中已上传的文件时的钩子，此处用来下载分析报告
+    //点击文件列表中已上传的文件时的钩子，此处用来下载分析报告
     handleAnalysisPreview(file) {
       this.fileInfo = file;
       this.$axios
@@ -307,8 +304,7 @@ export default {
     //文件上传成功时的钩子, response即为后台返回的全部内容
     handleAnalysisSuccess(response) {
       this.$message.success(response.msg);
-    }, */
-
+    },
     downloadReport(systemname) {
       this.$axios
         .post(
@@ -332,7 +328,6 @@ export default {
           window.URL.revokeObjectURL(link.href); //释放掉blob对象
         });
     },
-
     filterTag(value, row) {
       return row.tag === value;
     }

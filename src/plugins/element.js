@@ -4,7 +4,7 @@ import { Button, Form, FormItem, Input, Checkbox, Row, Col,
     Menu, MenuItem, Submenu, Tooltip, Dropdown, DropdownMenu, DropdownItem,
     Select, Option, DatePicker, TimePicker, cascader, Switch, CheckboxGroup,
     RadioGroup, Radio, Breadcrumb,  BreadcrumbItem, Table, TableColumn, Pagination, 
-    Dialog, Message, Upload, Tabs, TabPane} from 'element-ui'
+    Dialog, Message, Upload, Tabs, TabPane, Link, Popover} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -39,6 +39,8 @@ Vue.use(Message)
 Vue.use(Upload)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(Link)
+Vue.use(Popover)
 
 /* Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;

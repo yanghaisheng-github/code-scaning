@@ -11,7 +11,10 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "element-ui": "^2.4.5",
+    "jquery": "^3.4.1",
+    "mavon-editor": "^2.7.4",
     "vue": "^2.6.6",
+    "vue-froala-wysiwyg": "^2.9.5",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "xlsx": "^0.14.3"
@@ -33,7 +36,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "jquery": true
     },
     "extends": [
       "plugin:vue/essential",
